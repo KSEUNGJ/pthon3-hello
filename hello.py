@@ -1,15 +1,10 @@
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from flask import Flask
 
-PORT = 8888
+app = Flask(__name__)
 
-class HandlerClass(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response_only(200, 'OK')
-        self.send_header('Content-Type', 'text/html')
-        self.end_headers()
-        self.wfile.write(b"<h3>Hello World</h3>")
+@app.route('/')
+def hello():
+    return "Hello"
 
-
-serv = HTTPServer(('', PORT), HandlerClass)
-print(f"HTTP Server started...[{PORT}]")
-serv.serve_forever()
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
